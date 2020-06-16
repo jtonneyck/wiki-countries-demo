@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
 class App extends Component {
+
+  constructor(){
+    super()
+    this.state = {
+      countries: []
+    }
+  }
+
+    componentDidMount() {
+      axios.get("http://206.189.7.127/countries/").then((response)=> {
+        this.setState({countries: response.data})
+      })
+  }
   render() {
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.state.countries.map(country => <h1>{country.name.common}</h1>)}
       </div>
     );
   }
